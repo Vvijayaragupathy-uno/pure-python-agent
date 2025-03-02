@@ -9,7 +9,9 @@ def calculator(a: float, b: float, op: str) -> float:
     if op == "+": return a + b
     if op == "-": return a - b
     if op == "*": return a * b
-    if op == "/": return a / b
+    if op == "/": 
+        if b == 0: return 0.0 # avoid div by zero
+        return a / b
     return 0.0
 
 @tool()
