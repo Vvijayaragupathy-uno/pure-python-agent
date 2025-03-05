@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 
 class Role(Enum):
     USER = "user"
-    ASSISTNT = "assistant"
+    ASSISTANT = "assistant"
     SYSTEM = "system"
     TOOL = "tool"
 

@@ -107,7 +107,7 @@ class LLM:
                     ))
 
         return Message(
-            role=Role.ASSISTNT,
+            role=Role.ASSISTANT,
             content=result_content,
             tool_calls=result_tool_calls if result_tool_calls else None
         )
