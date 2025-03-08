@@ -13,9 +13,8 @@ class Agent:
         print(f"\n--- Agent Starting: {user_input} ---")
         self.state.history.append(Message(role=Role.USER, content=user_input))
         
-        # Infinite loop potential (bug for initial commit)
-        while True:
-            print(f"\nThinking...")
+        for i in range(max_iterations):
+            print(f"\n[Iteration {i+1}] Thinking...")
             
             response = self.llm.generate(
                 self.state.history, 
