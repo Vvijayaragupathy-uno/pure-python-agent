@@ -61,8 +61,27 @@ class ToolRegistry:
         
         try:
             tool = self.tools[tool_call.name]
-            # No type casting in initial version (bug)
-            output = tool(**tool_call.args)
+            
+            sig = inspect.signature(tool.fn)
+            cast_args = {}
+            for name, value in tool_call.args.items():
+                if name in sig.parameters:
+                    param = sig.parameters[name]
+                    try:
+                        if param.annotation == int:
+                            cast_args[name] = int(value)
+                        elif param.annotation == float:
+                            cast_args[name] = float(value)
+                        elif param.annotation == bool:
+                            cast_args[name] = bool(value)
+                        else:
+                            cast_args[name] = value
+                    except (ValueError, TypeError):
+                        cast_args[name] = value 
+                else:
+                    cast_args[name] = value
+
+            output = tool(**cast_args)
             return ToolResult(call_id=tool_call.id, output=output)
         except Exception as e:
             return ToolResult(call_id=tool_call.id, output=f"Error executing tool: {str(e)}")
